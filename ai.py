@@ -3,8 +3,11 @@ from discord.ext import commands
 from discord import app_commands
 import openai
 import os
+from dotenv import load_dotenv
 
-OPENAI_API_KEY = "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"  # Replace with your OpenAI API key
+load_dotenv()  # Add this line to load .env variables
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # Get the key from .env
 openai.api_key = OPENAI_API_KEY
 
 class AI(commands.Cog):
@@ -17,7 +20,7 @@ class AI(commands.Cog):
         await interaction.response.defer()
         try:
             response = openai.ChatCompletion.create(
-                model="gpt-4o",  # Use "gpt-4-1106-preview" for GPT-4.1 preview if available
+                model="gpt-4o",
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=200,
                 temperature=0.7,
